@@ -26,6 +26,13 @@ final class HealthKitManager: ObservableObject {
     }
 
     func requestAuthorization() async {
+        #if DEBUG
+        if DemoData.isEnabled {
+            authorizationStatusDescription = "Demo data"
+            return
+        }
+        #endif
+
         guard HKHealthStore.isHealthDataAvailable() else {
             authorizationStatusDescription = "Health data not available on this device"
             return
@@ -90,6 +97,12 @@ final class HealthKitManager: ObservableObject {
         weekStart: Date,
         boundaries: [HeartRateZone: ZoneBoundary]
     ) async throws -> [ZoneBreakdown] {
+        #if DEBUG
+        if DemoData.isEnabled {
+            return DemoData.weekBreakdowns(weekStart: weekStart)
+        }
+        #endif
+
         guard let heartRateType else {
             return Array(repeating: ZoneBreakdown(), count: 7)
         }
@@ -118,6 +131,12 @@ final class HealthKitManager: ObservableObject {
         day: Date,
         boundaries: [HeartRateZone: ZoneBoundary]
     ) async throws -> [ZoneBreakdown] {
+        #if DEBUG
+        if DemoData.isEnabled {
+            return DemoData.hourlyBreakdowns(day: day)
+        }
+        #endif
+
         guard let heartRateType else {
             return Array(repeating: ZoneBreakdown(), count: 24)
         }
