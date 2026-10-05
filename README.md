@@ -2,7 +2,7 @@
 
 An iPhone app that turns the heart rate data your Apple Watch already records into a simple weekly cardio score.
 
-<img src="appstore/screenshots/02-home-goal-reached.png" alt="Heart Zones home screen" width="280">
+<img src="appstore/screenshots/6.9in/02-home-goal-reached.png" alt="Heart Zones home screen" width="280">
 
 Every minute spent in a heart rate zone earns points toward a weekly goal (150 by default):
 

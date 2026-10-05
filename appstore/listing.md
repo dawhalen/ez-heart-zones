@@ -51,7 +51,7 @@ heart rate,zones,cardio,workout,apple watch,fitness,training,zone 2,weekly goal,
 - Marketing URL: (optional, leave blank)
 
 ## Screenshots
-`appstore/screenshots/` — 1320×2868, the 6.9" iPhone size. App Store Connect scales these down for smaller iPhones.
+`appstore/screenshots/6.9in/` (1320×2868) for the 6.9" slot; `appstore/screenshots/6.5in/` (1284×2778) for the 6.5" slot if App Store Connect asks for it. No alpha channel — App Store Connect rejects screenshots with transparency.
 Regenerate in the simulator by launching a Debug build with `-demoData YES` (see `Support/DemoData.swift`).
 
 ## Age rating
