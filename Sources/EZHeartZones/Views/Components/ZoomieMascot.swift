@@ -55,6 +55,27 @@ struct ZoomieMascot: View {
     }
 
     var body: some View {
+        // Limbs live inside the body's rotate/scale so they stay attached to the star's points;
+        // their own swing is layered on top, pivoting at those points.
+        PhaseAnimator(BodyPhase.allCases) { phase in
+            ZStack {
+                limbs
+                starAndFace
+            }
+            .rotationEffect(.degrees(phase.rotationDegrees), anchor: unitAnchor(CGPoint(x: 40, y: 40)))
+            .scaleEffect(phase.scale, anchor: unitAnchor(CGPoint(x: 40, y: 40)))
+        } animation: { phase in
+            phase.animation
+        }
+        .frame(width: Self.canvasSize.width, height: Self.canvasSize.height)
+        .onAppear {
+            withAnimation(.easeInOut(duration: 0.375).repeatForever(autoreverses: true)) {
+                limbSwing = true
+            }
+        }
+    }
+
+    private var limbs: some View {
         ZStack {
             limb(from: CGPoint(x: 18, y: 70), toPoint: CGPoint(x: 10, y: 88), color: AppColors.mascotGoldDark)
                 .rotationEffect(.degrees(limbSwing ? -18 : 14), anchor: unitAnchor(CGPoint(x: 18, y: 70)))
@@ -65,20 +86,6 @@ struct ZoomieMascot: View {
                 .rotationEffect(.degrees(limbSwing ? 30 : -16), anchor: unitAnchor(CGPoint(x: 5, y: 28)))
             limb(from: CGPoint(x: 75, y: 28), toPoint: CGPoint(x: 94, y: 10), color: AppColors.mascotGold)
                 .rotationEffect(.degrees(limbSwing ? -30 : 16), anchor: unitAnchor(CGPoint(x: 75, y: 28)))
-
-            PhaseAnimator(BodyPhase.allCases) { phase in
-                starAndFace
-                    .rotationEffect(.degrees(phase.rotationDegrees), anchor: unitAnchor(CGPoint(x: 40, y: 40)))
-                    .scaleEffect(phase.scale, anchor: unitAnchor(CGPoint(x: 40, y: 40)))
-            } animation: { phase in
-                phase.animation
-            }
-        }
-        .frame(width: Self.canvasSize.width, height: Self.canvasSize.height)
-        .onAppear {
-            withAnimation(.easeInOut(duration: 0.375).repeatForever(autoreverses: true)) {
-                limbSwing = true
-            }
         }
     }
 
