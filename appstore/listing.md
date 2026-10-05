@@ -46,8 +46,8 @@ Heart Zones needs heart rate data in Apple Health, typically from an Apple Watch
 heart rate,zones,cardio,workout,apple watch,fitness,training,zone 2,weekly goal,points,exercise
 
 ## URLs
-- Support URL: <hosted docs/index.html>
-- Privacy Policy URL: <hosted docs/privacy.html>
+- Support URL: https://dawhalen.github.io/ez-heart-zones/
+- Privacy Policy URL: https://dawhalen.github.io/ez-heart-zones/privacy.html
 - Marketing URL: (optional, leave blank)
 
 ## Screenshots
