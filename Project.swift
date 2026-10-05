@@ -11,13 +11,18 @@ let project = Project(
             deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(with: [
                 "UILaunchScreen": [:],
-                "NSHealthShareUsageDescription": "EZ Heart Zones reads your heart rate data to calculate how much time you spend in each heart rate zone.",
-                "NSHealthUpdateUsageDescription": "EZ Heart Zones does not write data to Health, but this permission may be requested by the system.",
+                "CFBundleDisplayName": "Heart Zones",
+                "NSHealthShareUsageDescription": "Heart Zones reads your heart rate data to calculate how much time you spend in each heart rate zone.",
+                "NSHealthUpdateUsageDescription": "Heart Zones does not write data to Health, but this permission may be requested by the system.",
             ]),
             sources: ["Sources/EZHeartZones/**"],
             resources: ["Resources/**"],
             entitlements: "Sources/EZHeartZones/EZHeartZones.entitlements",
-            dependencies: []
+            dependencies: [],
+            settings: .settings(base: [
+                "CODE_SIGN_STYLE": "Automatic",
+                "DEVELOPMENT_TEAM": "79KXB9K5XT",
+            ])
         ),
         .target(
             name: "EZHeartZonesTests",
