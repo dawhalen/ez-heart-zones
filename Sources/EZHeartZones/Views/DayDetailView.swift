@@ -15,29 +15,33 @@ struct DayDetailView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(spacing: 16) {
             DetailHeader(title: title)
+                .padding(.horizontal, 22)
+                .padding(.top, 20)
 
-            IntensityCard(mediumPoints: breakdown.mediumPoints, highPoints: breakdown.highPoints)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    IntensityCard(mediumPoints: breakdown.mediumPoints, highPoints: breakdown.highPoints)
 
-            TabView {
-                ZoneRingView(breakdown: breakdown)
-                    .padding(.top, 8)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    TabView {
+                        ZoneRingView(breakdown: breakdown)
+                            .padding(.top, 8)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
 
-                HourlyPointsChart(hourlyBreakdowns: hourlyBreakdowns)
-                    .padding(.top, 8)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                        HourlyPointsChart(hourlyBreakdowns: hourlyBreakdowns)
+                            .padding(.top, 8)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    }
+                    .tabViewStyle(.page(indexDisplayMode: .always))
+                    .frame(height: 256)
+
+                    ZoneBreakdownListView(breakdown: breakdown)
+                }
+                .padding(.horizontal, 22)
+                .padding(.bottom, 12)
             }
-            .tabViewStyle(.page(indexDisplayMode: .always))
-            .frame(height: 256)
-
-            ZoneBreakdownListView(breakdown: breakdown)
         }
-        .frame(maxHeight: .infinity, alignment: .top)
-        .padding(.horizontal, 22)
-        .padding(.top, 20)
-        .padding(.bottom, 12)
         .background(AppColors.background)
         .navigationBarHidden(true)
         .task(id: date) {

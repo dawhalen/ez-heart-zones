@@ -18,6 +18,7 @@ struct DetailHeader: View {
             }
             Spacer()
         }
+        .avoidingWindowControls()
     }
 }
 

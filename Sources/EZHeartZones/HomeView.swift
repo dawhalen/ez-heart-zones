@@ -53,57 +53,65 @@ struct HomeView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                 }
+                .avoidingWindowControls()
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
 
-                WeekSelectorBar(weekOffset: $weekOffset, dateRangeDescription: viewModel.week.dateRangeDescription)
+                ScrollView {
+                    VStack(spacing: 10) {
+                        WeekSelectorBar(
+                            weekOffset: $weekOffset,
+                            dateRangeDescription: viewModel.week.dateRangeDescription
+                        )
 
-                if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .font(.system(size: 12))
-                        .foregroundStyle(.red)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
+                        if let errorMessage = viewModel.errorMessage {
+                            Text(errorMessage)
+                                .font(.system(size: 12))
+                                .foregroundStyle(.red)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
 
-                NavigationLink {
-                    WeekDetailView(week: viewModel.week)
-                } label: {
-                    GoalCard(
-                        points: viewModel.week.totalBreakdown.totalPoints,
-                        goal: viewModel.week.weeklyGoal,
-                        confettiBurstID: confettiBurstID
-                    )
-                }
-                .buttonStyle(.plain)
-
-                IntensityLegendRow()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                Text("Daily Breakdown")
-                    .font(.system(size: 11, weight: .bold))
-                    .tracking(0.6)
-                    .foregroundStyle(AppColors.secondaryText)
-                    .textCase(.uppercase)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                VStack(spacing: 1) {
-                    ForEach(viewModel.week.days) { day in
                         NavigationLink {
-                            DayDetailView(
-                                date: day.date,
-                                breakdown: day.breakdown,
-                                healthKitManager: healthKitManager,
-                                settings: settings
-                            )
+                            WeekDetailView(week: viewModel.week)
                         } label: {
-                            DailyBreakdownRow(day: day, maxDayPoints: viewModel.week.maxDayPoints)
+                            GoalCard(
+                                points: viewModel.week.totalBreakdown.totalPoints,
+                                goal: viewModel.week.weeklyGoal,
+                                confettiBurstID: confettiBurstID
+                            )
                         }
                         .buttonStyle(.plain)
+
+                        IntensityLegendRow()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Text("Daily Breakdown")
+                            .font(.system(size: 11, weight: .bold))
+                            .tracking(0.6)
+                            .foregroundStyle(AppColors.secondaryText)
+                            .textCase(.uppercase)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        VStack(spacing: 1) {
+                            ForEach(viewModel.week.days) { day in
+                                NavigationLink {
+                                    DayDetailView(
+                                        date: day.date,
+                                        breakdown: day.breakdown,
+                                        healthKitManager: healthKitManager,
+                                        settings: settings
+                                    )
+                                } label: {
+                                    DailyBreakdownRow(day: day, maxDayPoints: viewModel.week.maxDayPoints)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 12)
                 }
             }
-            .frame(maxHeight: .infinity, alignment: .top)
-            .padding(.horizontal, 20)
-            .padding(.top, 20)
-            .padding(.bottom, 12)
             .background(AppColors.background)
             .navigationBarHidden(true)
             .sheet(isPresented: $isShowingSettings) {
